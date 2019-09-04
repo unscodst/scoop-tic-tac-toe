@@ -1,0 +1,28 @@
+.better-button {
+    padding: 5px 100px;
+    margin-top: 40px;
+    background-color: #282c34;
+    border: 1px solid #61dafb;
+    font-size: 24px;
+    color: #61dafb;
+    border-radius: 3px;
+    animation: Button-bounce infinite 3s ease-in-out;
+}
+.better-button:hover {
+    background-color: #61dafb;
+    border: none;
+    color: #282c34;
+    cursor: pointer;
+}
+
+@keyframes Button-bounce {
+    0% {
+        transform: scale(1)
+    }
+    50% {
+        transform: scale(1.2);
+    }
+    100% {
+        transform: scale(1)
+    }
+}

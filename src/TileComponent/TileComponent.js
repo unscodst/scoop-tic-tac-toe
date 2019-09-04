@@ -1,4 +1,5 @@
 import React from 'react';
+import './tile.css'
 
 const tileComponent = (props) => {
 

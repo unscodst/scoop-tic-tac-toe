@@ -1,9 +1,12 @@
 import React from 'react';
+import './message.css'
 
 const messageComponent = (props) => {
     let message = props.message;
+    
+    
     return(
-        <span>{message}</span>
+        <span id='message-text' className={(props.gameOver ? 'fly-in' : '')}>{message}</span>
     )
 }
 
