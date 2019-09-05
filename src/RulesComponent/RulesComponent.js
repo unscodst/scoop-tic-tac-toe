@@ -10,6 +10,8 @@ class Rules {
         this.movesMade = 0;
         this.maxMoves = 0;
         this.isWinner = false;
+        this.winningArray = [];
+        this.defaultWinning = [];
     }
     initialCheck(checkPick) {
         this.xIndex = checkPick.xIndex;
@@ -20,14 +22,17 @@ class Rules {
         this.finishedChecking = false;
         this.gameOver = false;
         this.movesMade = checkPick.movesMade;
-        this.maxMoves = checkPick.maxMoves;        
+        this.maxMoves = checkPick.maxMoves;
+        this.winningArray = [...checkPick.winningArray];  
+        this.defaultWinning = [...checkPick.winningArray];
 
         this.startChecking();
 
         let response = {
             message: this.message,
             gameOver: this.gameOver,
-            isWinner: this.isWinner
+            isWinner: this.isWinner,
+            winningArray: this.winningArray
         }
 
         return(response);
@@ -44,59 +49,55 @@ class Rules {
     }
 
     checkRow() {
-        console.log('checking row');
         for(let i = 0; i < this.gameTiles.length; i++) {
-            console.log('checking: ', this.xIndex,i);
             if(this.gameTiles[this.xIndex][i] !== this.picked) {
                 break;
-            }
+            } else this.winningArray[this.xIndex][i] = true;
             if(i === (this.gameTiles.length-1)) {
                 this.winnerText();
                 return;
             }
-        } 
+        }
+        if(!this.finishedChecking) this.resetWinning();
     }
 
     checkColumn() {
-        console.log('checking column');
         for(let i = 0; i < this.gameTiles.length; i++) {
-            console.log('checking: ', i, this.yIndex);
             if(this.gameTiles[i][this.yIndex] !== this.picked) {
                 break;
-            }
+            } else this.winningArray[i][this.yIndex] = true;
             if(i === (this.gameTiles.length-1)) {
                 this.winnerText();
                 return;
             }
-        } 
+        }
+        if(!this.finishedChecking) this.resetWinning(); 
     }
 
     checkDiag() {
-        console.log('checking diag');
         for(let i = 0; i < this.gameTiles.length; i++) {
-            console.log('checking: ', i,i);
             if(this.gameTiles[i][i] !== this.picked) {
                 break;
-            }
+            } else this.winningArray[i][i] = true;
             if(i === (this.gameTiles.length-1)) {
-                console.log('inside diag winner')
                 this.winnerText();
                 return;
             }
-        } 
+        }
+        if(!this.finishedChecking) this.resetWinning(); 
     }
+    
     checkReverseDiag() {
-        console.log('checking reverse diag')
         for(let i = 0; i < this.gameTiles.length; i++) {
-            console.log('reverse check: ', i,((this.gameTiles.length-1)-i))
             if(this.gameTiles[i][(this.gameTiles.length-1)-i] !== this.picked) {
                 break;
-            }
+            } else this.winningArray[i][(this.gameTiles.length-1)-i] = true;
             if(i === (this.gameTiles.length-1)) {
                 this.winnerText();
                 return
             }
         }
+        if(!this.finishedChecking) this.resetWinning();
     }
 
     winnerText() {
@@ -110,6 +111,11 @@ class Rules {
         this.finishedChecking = true;
         this.gameOver = true;
         this.isWinner = false;
+    }
+    resetWinning() {
+        this.winningArray = this.defaultWinning.map(row => {
+            return row.map(cell => false);
+        });
     }
 }
 

@@ -1,5 +1,5 @@
 .fly-in {
-    animation: Fly-in forwards 1.2s ease-in;
+    animation: Fly-in .33s ease-in;
 }
 
 @keyframes Fly-in {
